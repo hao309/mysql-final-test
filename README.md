@@ -65,7 +65,7 @@ deptno, deptno,    loc
 	(7900, "JAMES", "CLERK", 7698,"1981-03-12",  950, NULL, 30),
 	(7902, "FORD", "ANALYST", 7566, "1981-03-12", 3000, NULL, 20),
 	(7934, "MILLER", "CLERK", 7782, "1981-03-12", 1300, NULL, 10)
-```
+``` 
 ```sql
 create table biao1(
     -> deptno int primary key,
