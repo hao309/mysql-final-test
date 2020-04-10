@@ -251,29 +251,31 @@ mysql> select ename from biao2 where comm<100;
 1 row in set (0.00 sec)
 ```
 3.5 计算每个人的收入(ename, sal + comm)；计算总共有多少人；计算所有人的平均收入。 提示：计算时 NULL 要当做 0 处理； 
-```select ename, salary+comm from biao2;
-+--------+-------------+
-| ename  | salary+comm |
-+--------+-------------+
-| SMITH  |        NULL |
-| ALLEN  |        1900 |
-| WARD   |        1750 |
-| JONES  |        NULL |
-| MARTIN |        2650 |
-| BLAKE  |        NULL |
-| SCOTT  |        NULL |
-| KING   |        NULL |
-| TURNER |        1500 |
-| ADAMS  |        NULL |
-| JAMES  |        NULL |
-| FORD   |        NULL |
-| MILLER |        1400 |
-| 陈宗豪 |        NULL |
-+--------+-------------+
-14 rows in set (0.00 sec)
+```select ename,salary+comm,count(ename) '人数',AVG(salary+comm) '平均收入' from biao2;
++-------+-------------+------+----------+
+| ename | salary+comm | 人数 | 平均收入 |
++-------+-------------+------+----------+
+| SMITH |        NULL |   14 |     1840 |
++-------+-------------+------+----------+
 ```
 3.6 显示每个人的下属, 没有下属的显示 NULL。本操作使用关系代数中哪几种运算？
-
+```select t1.ename '大老板',t2.ename '老板' ,t3.ename '下属'
+    -> from (biao2 t1 inner join biao2 t2 on t1. empno= t2. mgr)  inner join biao2 t3
+    -> on t2.empno=t3.mgr;
++--------+-------+--------+
+| 大老板 | 老板  | 下属   |
++--------+-------+--------+
+| JONES  | FORD  | SMITH  |
+| KING   | BLAKE | ALLEN  |
+| KING   | BLAKE | WARD   |
+| KING   | BLAKE | MARTIN |
+| KING   | JONES | SCOTT  |
+| JONES  | SCOTT | ADAMS  |
+| KING   | BLAKE | JAMES  |
+| KING   | JONES | FORD   |
++--------+-------+--------+
+8 rows in set (0.01 sec)
+```
 3.7 建立一个视图：每个人的empno, ename, job 和 loc。简述为什么要建立本视图。
 ```create view v_kaoshi
     -> as
@@ -353,7 +355,24 @@ mysql> desc biao2;
 8 rows in set (0.00 sec)
 ```
 3.11 撰写一个函数 get_deptno_from_empno，输入 empno，输出对应的 deptno。 简述函数和存储过程有什么不同。
+```DELIMITER $$
+mysql> CREATE FUNCTION func_get_deptno_from_empno (empno INT)
+    -> RETURNS int
+    -> BEGIN
+    -> RETURN (SELECT deptno FROM biao2 WHERE biao2.empno = empno);
+    -> end$$
+Query OK, 0 rows affected (0.00 sec)
 
+mysql> delimiter ;
+mysql> select func_get_deptno_from_empno(7369);
++----------------------------------+
+| func_get_deptno_from_empno(7369) |
++----------------------------------+
+|                               20 |
++----------------------------------+
+1 row in set (0.01 sec)
+于存储过程来说可以返回参数，如记录集，而函数只能返回值或者表对象。
+```
 4 建立一个新用户，账号为自己的姓名拼音，密码为自己的学号；
 
 4.1 将表1的SELECT, INSERT, UPDATE(ename)权限赋给该账号。
