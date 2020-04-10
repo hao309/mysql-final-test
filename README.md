@@ -214,13 +214,94 @@ select*from biao2;
 1 row in set (0.00 sec)
 ``` 
 3.4 将 MILLER 的 comm 增加 100； 然后，找到 comm 比 MILLER 低的人；
+```update biao2
+    -> set comm=100
+    -> where ename='miller';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
 
+mysql> select*from biao2;
++----------+--------+-----------+------+------------+--------+------+--------+
+| empno    | ename  | job       | MGR  | Hiredate   | salary | comm | deptno |
++----------+--------+-----------+------+------------+--------+------+--------+
+|     7369 | SMITH  | CLERK     | 7902 | 1981-03-12 |    800 | NULL |     20 |
+|     7499 | ALLEN  | SALESMAN  | 7698 | 1982-03-12 |   1600 |  300 |     30 |
+|     7521 | WARD   | SALESMAN  | 7698 | 1838-03-12 |   1250 |  500 |     30 |
+|     7566 | JONES  | MANAGER   | 7839 | 1981-03-12 |   2975 | NULL |     20 |
+|     7654 | MARTIN | SALESMAN  | 7698 | 1981-01-12 |   1250 | 1400 |     30 |
+|     7698 | BLAKE  | MANAGER   | 7839 | 1985-03-12 |   2450 | NULL |     10 |
+|     7788 | SCOTT  | ANALYST   | 7566 | 1981-03-12 |   3000 | NULL |     20 |
+|     7839 | KING   | PRESIDENT | NULL | 1981-03-12 |   5000 | NULL |     10 |
+|     7844 | TURNER | SALESMAN  | 7689 | 1981-03-12 |   1500 |    0 |     30 |
+|     7878 | ADAMS  | CLERK     | 7788 | 1981-03-12 |   1100 | NULL |     20 |
+|     7900 | JAMES  | CLERK     | 7698 | 1981-03-12 |    950 | NULL |     30 |
+|     7902 | FORD   | ANALYST   | 7566 | 1981-03-12 |   3000 | NULL |     20 |
+|     7934 | MILLER | CLERK     | 7782 | 1981-03-12 |   1300 |  100 |     10 |
+| 17061507 | 陈宗豪 | sTUDENT   | 7782 | 2000-03-12 |   NULL | NULL |     10 |
++----------+--------+-----------+------+------------+--------+------+--------+
+14 rows in set (0.00 sec)
+
+mysql> select ename from biao2 where comm<100;
++--------+
+| ename  |
++--------+
+| TURNER |
++--------+
+1 row in set (0.00 sec)
+```
 3.5 计算每个人的收入(ename, sal + comm)；计算总共有多少人；计算所有人的平均收入。 提示：计算时 NULL 要当做 0 处理； 
-
+```select ename, salary+comm from biao2;
++--------+-------------+
+| ename  | salary+comm |
++--------+-------------+
+| SMITH  |        NULL |
+| ALLEN  |        1900 |
+| WARD   |        1750 |
+| JONES  |        NULL |
+| MARTIN |        2650 |
+| BLAKE  |        NULL |
+| SCOTT  |        NULL |
+| KING   |        NULL |
+| TURNER |        1500 |
+| ADAMS  |        NULL |
+| JAMES  |        NULL |
+| FORD   |        NULL |
+| MILLER |        1400 |
+| 陈宗豪 |        NULL |
++--------+-------------+
+14 rows in set (0.00 sec)
+```
 3.6 显示每个人的下属, 没有下属的显示 NULL。本操作使用关系代数中哪几种运算？
 
 3.7 建立一个视图：每个人的empno, ename, job 和 loc。简述为什么要建立本视图。
+```create view v_kaoshi
+    -> as
+    -> select empno ,ename ,job
+    -> from biao2;
+Query OK, 0 rows affected (0.02 sec)
 
+mysql> select*from v_kaoshi;
++----------+--------+-----------+
+| empno    | ename  | job       |
++----------+--------+-----------+
+|     7369 | SMITH  | CLERK     |
+|     7499 | ALLEN  | SALESMAN  |
+|     7521 | WARD   | SALESMAN  |
+|     7566 | JONES  | MANAGER   |
+|     7654 | MARTIN | SALESMAN  |
+|     7698 | BLAKE  | MANAGER   |
+|     7788 | SCOTT  | ANALYST   |
+|     7839 | KING   | PRESIDENT |
+|     7844 | TURNER | SALESMAN  |
+|     7878 | ADAMS  | CLERK     |
+|     7900 | JAMES  | CLERK     |
+|     7902 | FORD   | ANALYST   |
+|     7934 | MILLER | CLERK     |
+| 17061507 | 陈宗豪 | sTUDENT   |
++----------+--------+-----------+
+14 rows in set (0.00 sec)
+为了保护隐私不被侵犯
+```
 3.8 为表2增加一个约束：deptno字段需要在表1中存在；这称做什么完整性？
 
 3.9 为表2增加一个索引：ename 字段。简述为什么要在 ename 字段建立索引
@@ -395,3 +476,5 @@ Create_tablespace_priv: N
 8.3 如果隔离级别为 READ-UNCOMMITED, 完成 “MILLER 的 comm 增加 100” 事务操作完成后，可能读到的结果有哪些，原因是什么？
 
 9 有哪些场景不适合用关系型数据库？为什么？
+```搜索 推荐 商品分类 高频交易 用户和权限acl 日志分析 媒体库 email 分类广告 时间系列
+```
