@@ -306,7 +306,12 @@ mysql> select*from v_kaoshi;
 为了保护隐私不被侵犯
 ```
 3.8 为表2增加一个约束：deptno字段需要在表1中存在；这称做什么完整性？
-
+```sql
+alter table biao2
+    -> change column deptno
+    -> int not null;
+    实体完整性
+```
 3.9 为表2增加一个索引：ename 字段。简述为什么要在 ename 字段建立索引
 ```sql
 create index index_ename
@@ -477,7 +482,8 @@ Create_tablespace_priv: N
 2 rows in set (0.00 sec)
 ```
 4.3 `with grant option` 是什么意思。
-```传递权限
+```sql
+传递权限
 ```
 5 表 1 和表 2 这样设计是否符合第一范式，是否符合第二范式，为什么？
 
