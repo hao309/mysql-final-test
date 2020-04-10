@@ -251,7 +251,8 @@ mysql> select ename from biao2 where comm<100;
 1 row in set (0.00 sec)
 ```
 3.5 计算每个人的收入(ename, sal + comm)；计算总共有多少人；计算所有人的平均收入。 提示：计算时 NULL 要当做 0 处理； 
-```select ename,salary+comm,count(ename) '人数',AVG(salary+comm) '平均收入' from biao2;
+```sql
+ select ename,salary+comm,count(ename) '人数',AVG(salary+comm) '平均收入' from biao2;
 +-------+-------------+------+----------+
 | ename | salary+comm | 人数 | 平均收入 |
 +-------+-------------+------+----------+
