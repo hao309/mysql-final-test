@@ -212,6 +212,7 @@ select*from biao2;
 |                    6 |
 +----------------------+
 1 row in set (0.00 sec)
+简单数据查询运算
 ``` 
 3.4 将 MILLER 的 comm 增加 100； 然后，找到 comm 比 MILLER 低的人；
 ```update biao2
