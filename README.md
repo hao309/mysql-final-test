@@ -384,7 +384,11 @@ mysql> select func_get_deptno_from_empno(7369);
 于存储过程来说可以返回参数，如记录集，而函数只能返回值或者表对象。
 ```
 4 建立一个新用户，账号为自己的姓名拼音，密码为自己的学号；
-
+```sql
+create user 'chenzonghao'
+    -> identified by '17061507';
+Query OK, 0 rows affected (0.01 sec)
+```
 4.1 将表1的SELECT, INSERT, UPDATE(ename)权限赋给该账号。
 
 4.2 显示该账号权限
