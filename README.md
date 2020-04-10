@@ -215,7 +215,8 @@ select*from biao2;
 简单数据查询运算
 ``` 
 3.4 将 MILLER 的 comm 增加 100； 然后，找到 comm 比 MILLER 低的人；
-```update biao2
+```sql
+update biao2
     -> set comm=100
     -> where ename='miller';
 Query OK, 1 row affected (0.01 sec)
@@ -260,7 +261,8 @@ mysql> select ename from biao2 where comm<100;
 +-------+-------------+------+----------+
 ```
 3.6 显示每个人的下属, 没有下属的显示 NULL。本操作使用关系代数中哪几种运算？
-```select t1.ename '大老板',t2.ename '老板' ,t3.ename '下属'
+```sql
+select t1.ename '大老板',t2.ename '老板' ,t3.ename '下属'
     -> from (biao2 t1 inner join biao2 t2 on t1. empno= t2. mgr)  inner join biao2 t3
     -> on t2.empno=t3.mgr;
 +--------+-------+--------+
@@ -278,7 +280,8 @@ mysql> select ename from biao2 where comm<100;
 8 rows in set (0.01 sec)
 ```
 3.7 建立一个视图：每个人的empno, ename, job 和 loc。简述为什么要建立本视图。
-```create view v_kaoshi
+```sql
+create view v_kaoshi
     -> as
     -> select empno ,ename ,job
     -> from biao2;
@@ -361,7 +364,8 @@ mysql> desc biao2;
 8 rows in set (0.00 sec)
 ```
 3.11 撰写一个函数 get_deptno_from_empno，输入 empno，输出对应的 deptno。 简述函数和存储过程有什么不同。
-```DELIMITER $$
+```sql
+DELIMITER $$
 mysql> CREATE FUNCTION func_get_deptno_from_empno (empno INT)
     -> RETURNS int
     -> BEGIN
