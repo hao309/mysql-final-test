@@ -24,7 +24,7 @@ select now();
 | 2020-04-10 08:00:30 |
 +---------------------+
 1 row in set (0.00 sec)
-'''
+```
 2 组合打印自己的姓名和学号
 
 (例如 张三+123456 或者 zhangsan+123456 显示需包含加号)，写出SQL语句和结果
@@ -99,14 +99,14 @@ mysql> select *from biao1;
 |     40 | OPERATIONS | BOSTON   |
 +--------+------------+----------+
 
- create table biao2(
+create table biao2(
     -> empno int primary key,
     -> ename varchar(20),
     -> job varchar(40),
     -> MGR int,
     -> Hiredate varchar(40),
     -> sal float,
-    -> vomn float,
+    -> comm float,
     -> deptno int);
 Query OK, 0 rows affected (0.04 sec)
 
@@ -120,7 +120,7 @@ mysql> desc biao2;
 | MGR      | int(11)     | YES  |     | NULL    |       |
 | Hiredate | varchar(40) | YES  |     | NULL    |       |
 | sal      | float       | YES  |     | NULL    |       |
-| vomn     | float       | YES  |     | NULL    |       |
+| comm     | float       | YES  |     | NULL    |       |
 | deptno   | int(11)     | YES  |     | NULL    |       |
 +----------+-------------+------+-----+---------+-------+
 8 rows in set (0.01 sec)
@@ -128,7 +128,7 @@ mysql> desc biao2;
 mysql> insert into biao2 values
     -> (7369, "SMITH", "CLERK", 7902, "1981-03-12", 800.00, NULL, 20),
     -> (7499, "ALLEN", "SALESMAN", 7698, "1982-03-12", 1600, 300, 30),
-    -> (7521, "WARD", "SALESMAN", 7698, "1838-03-12", 1250, 500, 30),
+    ->  (7521, "WARD", "SALESMAN", 7698, "1838-03-12", 1250, 500, 30),
     -> (7566, "JONES", "MANAGER", 7839, "1981-03-12", 2975, NULL, 20),
     -> (7654, "MARTIN", "SALESMAN", 7698, "1981-01-12", 1250, 1400, 30),
     -> (7698, "BLAKE", "MANAGER", 7839, "1985-03-12", 2450, NULL, 10),
@@ -142,9 +142,9 @@ mysql> insert into biao2 values
 Query OK, 13 rows affected (0.01 sec)
 Records: 13  Duplicates: 0  Warnings: 0
 
-mysql> select*from biao2;
+mysql>  select*from biao2;
 +-------+--------+-----------+------+------------+------+------+--------+
-| empno | ename  | job       | MGR  | Hiredate   | sal  | vomn | deptno |
+| empno | ename  | job       | MGR  | Hiredate   | sal  | comm | deptno |
 +-------+--------+-----------+------+------------+------+------+--------+
 |  7369 | SMITH  | CLERK     | 7902 | 1981-03-12 |  800 | NULL |     20 |
 |  7499 | ALLEN  | SALESMAN  | 7698 | 1982-03-12 | 1600 |  300 |     30 |
@@ -169,11 +169,10 @@ mysql> select*from biao2;
 例如：`(12345,  "Zhangsan", "sTUDENT", 7782, "2000-03-12", NULL, NULL, 10)`
 ```sql
 insert into biao2 values(17061507,'陈宗豪','sTUDENT',7782,'2000-03-12',null,null,10);
-Query OK, 1 row affected (0.01 sec)
-
-mysql> select*from biao2;
+Query OK, 1 row affected (0.00 sec)
+select*from biao2;
 +----------+--------+-----------+------+------------+------+------+--------+
-| empno    | ename  | job       | MGR  | Hiredate   | sal  | vomn | deptno |
+| empno    | ename  | job       | MGR  | Hiredate   | sal  | comm | deptno |
 +----------+--------+-----------+------+------------+------+------+--------+
 |     7369 | SMITH  | CLERK     | 7902 | 1981-03-12 |  800 | NULL |     20 |
 |     7499 | ALLEN  | SALESMAN  | 7698 | 1982-03-12 | 1600 |  300 |     30 |
@@ -194,6 +193,15 @@ mysql> select*from biao2;
 ```
 
 3.2 表中入职时间（Hiredate字段）最短的人。
+```sql
+ select ename from biao2 where Hiredate=(select max(hiredate) from biao2);
++--------+
+| ename  |
++--------+
+| 陈宗豪 |
++--------+
+1 row in set (0.00 sec)
+```
 
 3.3 有几种职位（job字段）？在关系代数中，本操作是什么运算？
 
