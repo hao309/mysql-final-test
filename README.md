@@ -500,7 +500,8 @@ ACID是衡量事务的四个特性：原子性、一致性、隔离性、持久�
 8.1 编写一个事务，“将 MILLER 的 comm 增加 100，如果增加后的 comm 大于 1000 则回滚”；
 
 8.2 如何查看 MySQL 当前的隔离级别？
-```show variables like 'tx_isolation';
+```sql
+show variables like 'tx_isolation';
 +---------------+-----------------+
 | Variable_name | Value           |
 +---------------+-----------------+
